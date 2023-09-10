@@ -1,14 +1,11 @@
 <script setup>
-
 import {
   FlexRender,
   getCoreRowModel,
   useVueTable
 } from '@tanstack/vue-table';
 import { ref, h } from 'vue';
-import BuySellButton from '@/Components/BuySellButton.vue';
 import { usePage } from '@inertiajs/vue3';
-
 
 defineProps({
   soldTableData: {
@@ -22,12 +19,15 @@ defineProps({
   }
 });
 
-
 const tableData = ref(usePage().props.soldTableData);
-
 const module = ref(usePage().props.type);
 console.log(module.value);
+
 const columnsCrypto = ref([
+  {
+    accessorKey: 'code',
+    header: 'Code'
+  },
   {
     accessorKey: 'name',
     header: 'Name'
@@ -42,64 +42,36 @@ const columnsCrypto = ref([
     cell: ({ row }) => {
       return h('div', {
         class: 'w-full text-center ',
-        innerHTML: '€' + row.original.bought_price
+        innerHTML: row.original.bought_price.toFixed(2) + '€'
       })
     }
   },
-
   {
     accessorKey: 'total_bought_amount',
     header: 'Total Bought Amount',
     cell: ({ row }) => {
       return h('div', {
         class: 'w-full text-center ',
-        innerHTML: '€' + row.original.total_bought_amount.toFixed(2)
+        innerHTML: row.original.total_bought_amount.toFixed(2) + '€'
       })
     }
   },
-  // {
-  //     accessorKey:'total_amount_gain',
-  //     header:'Total Selling Amount',
-  //     cell:({row})=>  {
-  //         var totalAmount = row.original.current_price*row.original.quantity;
-  //         return h('div', {
-  //             class:'w-full text-center ',
-  //             innerHTML: '€'+totalAmount.toFixed(2)
-  //         })
-  //     }
-  // },
   {
     accessorKey: 'sold_amount',
     header: 'Sold Amount',
-    cell: ({ row }) => row.original.sold_amount == null ? 0 : row.original.sold_amount.toFixed(2)
+    cell: ({ row }) => row.original.sold_amount == null ? 0 : row.original.sold_amount.toFixed(2) + '€'
   },
-  
-  // {
-  //     accessorKey:'id',
-  //     header:' ',
-  //     cell:({row})=>  h(BuySellButton,{
-  //         id:row.original.crypto_id,
-  //         code:row.original.code,
-  //         cryptName:row.original.name,
-  //         cryptPrice:row.original.current_price,
-  //         boughtPrice:row.original.bought_price,
-  //         quantity:row.original.quantity,
-  //         totalBoughtAmount:row.original.total_bought_amount
-  //     })
-  // }
-
+  {
+    accessorKey: 'updated_at',
+    header: 'Date'
+  },
 ]);
-
 
 const table = useVueTable({
   data: tableData.value,
   columns: columnsCrypto.value,
   getCoreRowModel: getCoreRowModel()
 })
-
-
-
-
 </script>
 
 <template>
@@ -119,7 +91,6 @@ const table = useVueTable({
           <FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" :key="cell.index" />
         </td>
       </tr>
-
     </tbody>
   </table>
 </template>

@@ -1,15 +1,14 @@
 <script setup>
-
 import {
-  FlexRender,
-  getCoreRowModel,
-  useVueTable
+  FlexRender, // Composant pour le rendu flexible des cellules et en-têtes du tableau
+  getCoreRowModel, // Fonction pour obtenir le modèle de ligne de base
+  useVueTable // Hook pour initialiser et utiliser le tableau Vue
 } from '@tanstack/vue-table';
 import { ref, h } from 'vue';
 import BuySellButton from '@/Components/BuySellButton.vue';
-import { usePage } from '@inertiajs/vue3';
+import { usePage } from '@inertiajs/vue3'; // Fonction d'Inertia.js pour accéder aux propriétés de la page actuelle
 
-
+// Définition des propriétés du composant
 defineProps({
   tableData: {
     type: Object
@@ -22,12 +21,18 @@ defineProps({
   }
 });
 
-
+// Initialisation et récupération des données
 const tableData = ref(usePage().props.tableData);
-
 const module = ref(usePage().props.type);
+
 console.log(module.value);
+
+// Initialisation des données
 const columnsCrypto = ref([
+{
+    accessorKey: 'code', // Clé récupérant la valeur
+    header: 'Code'
+  },
   {
     accessorKey: 'name',
     header: 'Name'
@@ -42,18 +47,7 @@ const columnsCrypto = ref([
     cell: ({ row }) => {
       return h('div', {
         class: 'w-full text-center ',
-        innerHTML: '€' + row.original.bought_price
-      })
-    }
-  },
-
-  {
-    accessorKey: 'current_price',
-    header: 'Current Price',
-    cell: ({ row }) => {
-      return h('div', {
-        class: 'w-full text-center ',
-        innerHTML: '€' + row.original.current_price
+        innerHTML: row.original.bought_price + '€'
       })
     }
   },
@@ -63,25 +57,13 @@ const columnsCrypto = ref([
     cell: ({ row }) => {
       return h('div', {
         class: 'w-full text-center ',
-        innerHTML: '€' + row.original.total_bought_amount.toFixed(2)
+        innerHTML: row.original.total_bought_amount.toFixed(2) + '€'
       })
     }
   },
   {
-    accessorKey: 'total_amount_gain',
-    header: 'Total Selling Amount',
-    cell: ({ row }) => {
-      var totalAmount = row.original.current_price * row.original.quantity;
-      return h('div', {
-        class: 'w-full text-center ',
-        innerHTML: '€' + totalAmount.toFixed(2)
-      })
-    }
-  },
-  {
-    accessorKey: 'sold_amount',
-    header: 'Sold Amount',
-    cell: ({ row }) => row.original.sold_amount == null ? 0 : row.original.sold_amount.toFixed(2)
+    accessorKey: 'created_at',
+    header: 'Date'
   },
   {
     accessorKey: 'id',
@@ -95,20 +77,15 @@ const columnsCrypto = ref([
       quantity: row.original.quantity,
       totalBoughtAmount: row.original.total_bought_amount
     })
-  }
-
+  },
 ]);
 
-
+// Initialisation du tableau avec les données et les colonnes
 const table = useVueTable({
   data: tableData.value,
   columns: columnsCrypto.value,
   getCoreRowModel: getCoreRowModel()
 })
-
-
-
-
 </script>
 
 <template>
@@ -121,6 +98,7 @@ const table = useVueTable({
       </tr>
     </thead>
     <tbody>
+      <!-- Génère dynamiquement les lignes en fonction des données -->
       <tr v-for="row in table.getRowModel().rows" :key="row.index"
         class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
         <td v-for="cell in row.getVisibleCells()" :key="cell.id"
@@ -128,7 +106,6 @@ const table = useVueTable({
           <FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" :key="cell.index" />
         </td>
       </tr>
-
     </tbody>
   </table>
 </template>

@@ -46,3 +46,9 @@ php artisan serve
 E-mail: admin@bitchest.com
 Password: admin123
 ```
+
+# **Export Users database if needed**
+
+```
+php artisan report:daily-users
+```
