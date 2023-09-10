@@ -1,9 +1,9 @@
 <p align="center"><a href="#" target="_blank"><img src="./public/images/bitchest_logo.png" width="400" alt="logo"></a></p>
 
-# **HOW TO SETUP THE PROJECT**
+# **How to setup the application**
 
 ```
- cd Bitchest
+cd Bitchest
 ```
 
 ```
@@ -30,7 +30,7 @@ php artisan db:seed
 php artisan db:seed CryptoCurrencySeeder
 ```
 
-# **HOW TO LAUNCH THE APPLICATION**
+# **How to launch the application**
 
 ```
 npm run dev
