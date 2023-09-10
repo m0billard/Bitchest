@@ -1,0 +1,12 @@
+@import "/node_modules/toastify-js/src/toastify.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+
+.nav-gradient-color{
+    background: #95C6ED;
+    background: linear-gradient(135deg, #95C6ED, #03D7EF);
+}
