@@ -29,6 +29,7 @@ Route::middleware('auth:sanctum')->controller(AdminController::class)->group(fun
 Route::middleware('auth:sanctum')->controller(CustomerController::class)->group(function () {
   Route::get('/getAllCustomer', 'getAllCustomer')->name('getAllCustomer');
   Route::post('/remove/customer/{id}', 'removeCustomer')->name('customer.remove');
+     Route::get('/customer-profile', 'CustomerController@profile')->name('customer-profile');
 });
 
 Route::middleware('auth:sanctum')->controller(CryptoCurrencyController::class)->group(function () {

@@ -26,10 +26,6 @@ php artisan migrate
 php artisan db:seed
 ```
 
-```
-php artisan db:seed CryptoCurrencySeeder
-```
-
 # **How to launch the application**
 
 ```
@@ -47,7 +43,7 @@ E-mail: admin@bitchest.com
 Password: admin123
 ```
 
-# **Export Users database if needed**
+# **Export Users's database if needed**
 
 ```
 php artisan report:daily-users
