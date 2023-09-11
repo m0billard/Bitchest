@@ -57,14 +57,9 @@ const submit = () => {
         <InputError class="mt-2" :message="form.errors.password" />
       </div>
 
-      <div class="block mt-4">
-        <label class="flex items-center">
-          <Checkbox name="remember" v-model:checked="form.remember" />
-          <span class="ml-2 text-sm text-gray-600">Remember me</span>
-        </label>
-      </div>
 
-      <div class="flex items-center justify-end mt-4">
+
+      <div class="flex items-center justify-center mt-4">
         <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
           Log in
         </PrimaryButton>

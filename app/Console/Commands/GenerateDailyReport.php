@@ -49,7 +49,7 @@ class GenerateDailyReport extends Command
     }
 
     $path = "C:\\Users\\Morgan\\Desktop\\reports-daily-{$date}.txt";
-file_put_contents($path, $report);
+    file_put_contents($path, $report);
 
     $this->info("Daily report for {$date} generated successfully!");
 

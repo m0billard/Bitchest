@@ -27,9 +27,15 @@ const module = ref(usePage().props.type);
 
 console.log(module.value);
 
+function formatDate(dateString) {
+  const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+  const date = new Date(dateString);
+  return date.toLocaleDateString(undefined, options);
+}
+
 // Initialisation des données
 const columnsCrypto = ref([
-{
+  {
     accessorKey: 'code', // Clé récupérant la valeur
     header: 'Code'
   },
@@ -63,7 +69,13 @@ const columnsCrypto = ref([
   },
   {
     accessorKey: 'created_at',
-    header: 'Date'
+    header: 'Date',
+    cell: ({ row }) => {
+      return h('div', {
+        class: 'w-full text-center ',
+        innerHTML: formatDate(row.original.created_at)
+      })
+    }
   },
   {
     accessorKey: 'id',
@@ -89,7 +101,7 @@ const table = useVueTable({
 </script>
 
 <template>
-  <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+  <table class="w-full text-sm text-center text-gray-500 dark:text-gray-400">
     <thead class="text-xs text-gray-700 bg-gray-50 ">
       <tr v-for="headerGroup  in table.getHeaderGroups()" :key="headerGroup.id">
         <th v-for="header in headerGroup.headers" :key="header.id" scope="col" class="px-6 py-3">
